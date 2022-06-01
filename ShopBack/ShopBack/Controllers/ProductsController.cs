@@ -26,7 +26,8 @@ namespace ShopBack.Controllers
 
             return Ok(products); 
         }
-        [HttpGet("id")]
+        [HttpGet]
+        [Route("{id}")]
         public async Task<ActionResult<Product>> GetProduct(int id)
         {
             var product = await _context.Products.FindAsync(id);

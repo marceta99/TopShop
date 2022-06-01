@@ -37,6 +37,7 @@ namespace ShopBack
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ShopBack", Version = "v1" });
             });
+            services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,6 +53,9 @@ namespace ShopBack
             app.UseHttpsRedirection();
 
             app.UseRouting();
+            app.UseCors(options => {
+                options.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000");
+            }); 
 
             app.UseAuthorization();
 
