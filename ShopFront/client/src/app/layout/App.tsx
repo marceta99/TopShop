@@ -3,12 +3,13 @@ import { createTheme, CssBaseline } from "@mui/material";
 import { Container } from "@mui/system";
 import {useState, useEffect} from "react"; 
 import { Route } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 import AboutPage from "../../features/about/AboutPage";
 import Catalog from "../../features/catalog/Catalog";
 import ProductDetails from "../../features/catalog/ProductDetails";
 import ContactPage from "../../features/contact/ContactPage";
 import HomePage from "../../features/home/HomePage";
-import { Product } from "../models/product";
+import "react-toastify/dist/ReactToastify.css"; 
 import { Header } from "./Header";
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
+        <ToastContainer position="bottom-right" hideProgressBar/>
         <CssBaseline/>
         <Header darkMode={darkMode} handleThemeChange={handleThemeChange}/>
         <Container>

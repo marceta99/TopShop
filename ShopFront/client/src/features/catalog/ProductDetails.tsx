@@ -1,6 +1,7 @@
 import { Divider, Grid, TableBody, TableCell, TableContainer, TableRow } from "@mui/material";
 import { useState,useEffect } from "react";
 import { useParams } from "react-router-dom";
+import agent from "../../api/agent";
 import { Product } from "../../app/models/product";
 
 export default function ProductDetails(){
@@ -9,8 +10,7 @@ export default function ProductDetails(){
     const [isLoading, setLoading] = useState(true) ; 
 
     useEffect(()=>{
-        fetch(`https://localhost:5001/api/Products/${id}`)
-        .then(response => response.json())
+        agent.Catalog.details(parseInt(id))
         .then(data => setProduct(data))
         .catch(err => console.log(err))
         .finally(()=> setLoading(false)) ; 
