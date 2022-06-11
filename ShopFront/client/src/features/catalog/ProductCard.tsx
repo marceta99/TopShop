@@ -1,5 +1,8 @@
 import { ListItem, ListItemAvatar, Avatar, ListItemText, Card, Button, CardActions, CardContent, CardMedia, Typography, CardHeader } from "@mui/material";
 import { Link } from "react-router-dom";
+import agent from "../../api/agent";
+import { useStoreContext } from "../../app/context/StoreContext";
+import { Basket } from "../../app/models/basket";
 import { Product } from "../../app/models/product";
 
 interface Props{
@@ -8,6 +11,14 @@ interface Props{
 }
 
 export default function ProductCard({product , index} : Props){
+    const {setBasket} = useStoreContext() ; 
+
+    function handleAddItem(productId : number){
+        agent.Basket.addItem(productId)
+                    .then(basket => setBasket(basket as unknown as Basket))
+                    .catch(error =>console.log(error))
+    }
+
     return(
         <>
           <Card >
@@ -31,7 +42,7 @@ export default function ProductCard({product , index} : Props){
                     </Typography>
                 </CardContent>
                 <CardActions>
-                    <Button size="small">Add To Card</Button>
+                    <Button size="small" onClick={()=> handleAddItem(product.id)}>Add To Card</Button>
                     <Button size="small"><Link to={`catalog/${product.id}`} >View</Link></Button>
                 </CardActions>
           </Card>

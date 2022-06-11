@@ -11,8 +11,26 @@ import ContactPage from "../../features/contact/ContactPage";
 import HomePage from "../../features/home/HomePage";
 import "react-toastify/dist/ReactToastify.css"; 
 import { Header } from "./Header";
+import BasketPage from "../../features/basket/BasketPage";
+import { useStoreContext } from "../context/StoreContext";
+import { getCookie } from "../util/util";
+import agent from "../../api/agent";
+import CheckoutPage from "../../features/checkout/CheckoutPage";
 
 function App() {
+
+  const {setBasket} = useStoreContext() ; 
+
+  useEffect(()=>{
+    const buyerId = getCookie("buyerId");  //get value from cookie with that buyerId key
+
+    if(buyerId){
+      agent.Basket.get()
+        .then(basket => setBasket(basket))
+        .catch(error => console.log(error))
+    }
+  }, [setBasket]);
+
   const [darkMode, setDarkMode] = useState(false) ; 
   const mode = darkMode ? "dark" : "light" ; 
  
@@ -37,6 +55,9 @@ function App() {
           <Route path="/catalog/:id" component={ProductDetails}/>
           <Route path="/about" component={AboutPage}/>
           <Route path="/contact" component={ContactPage}/>
+          <Route path="/basket" component={BasketPage}/>
+          <Route path="/checkout" component={CheckoutPage}/>
+
         </Container>
       </ThemeProvider>
     </div>
